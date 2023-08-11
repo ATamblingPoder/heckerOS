@@ -7,7 +7,7 @@
 
 ARG FEDORA_MAJOR_VERSION=38
 # Warning: changing this might not do anything for you. Read comment above.
-ARG BASE_IMAGE_URL=ghcr.io/ublue-os/silverblue-main
+ARG BASE_IMAGE_URL=quay.io/fedora-ostree-desktops/silverblue
 
 FROM ${BASE_IMAGE_URL}:${FEDORA_MAJOR_VERSION}
 
@@ -16,7 +16,7 @@ FROM ${BASE_IMAGE_URL}:${FEDORA_MAJOR_VERSION}
 ARG RECIPE=./recipe.yml
 
 # The default image registry to write to policy.json and cosign.yaml
-ARG IMAGE_REGISTRY=ghcr.io/ublue-os
+ARG IMAGE_REGISTRY=quay.io/fedora-ostree-desktops/silverblue
 
 # Copy static configurations and component files.
 # Warning: If you want to place anything in "/etc" of the final image, you MUST
@@ -34,24 +34,32 @@ COPY cosign.pub /usr/share/ublue-os/cosign.pub
 COPY ${RECIPE} /usr/share/ublue-os/recipe.yml
 
 # Copy nix install script and Universal Blue wallpapers RPM from Bling image
-COPY --from=ghcr.io/ublue-os/bling:latest /rpms/ublue-os-wallpapers-0.1-1.fc38.noarch.rpm /tmp/ublue-os-wallpapers-0.1-1.fc38.noarch.rpm
+# COPY --from=ghcr.io/ublue-os/bling:latest /rpms/ublue-os-wallpapers-0.1-1.fc38.noarch.rpm /tmp/ublue-os-wallpapers-0.1-1.fc38.noarch.rpm
 
 # Integrate bling justfiles onto image
-COPY --from=ghcr.io/ublue-os/bling:latest /files/usr/share/ublue-os/just /usr/share/ublue-os/just
+# COPY --from=ghcr.io/ublue-os/bling:latest /files/usr/share/ublue-os/just /usr/share/ublue-os/just
 
 # Add nix installer if you want to use it
-COPY --from=ghcr.io/ublue-os/bling:latest /files/usr/bin/ublue-nix* /usr/bin
+# COPY --from=ghcr.io/ublue-os/bling:latest /files/usr/bin/ublue-nix* /usr/bin
 
 # "yq" used in build.sh and the "setup-flatpaks" just-action to read recipe.yml.
 # Copied from the official container image since it's not available as an RPM.
 COPY --from=docker.io/mikefarah/yq /usr/bin/yq /usr/bin/yq
 
+COPY --from=ghcr.io/ublue-os/config:latest /rpms/ublue-os-udev-rules.noarch.rpm /
+COPY --from=ghcr.io/ublue-os/config:latest /rpms/ublue-os-update-services.noarch.rpm /
+RUN rpm -ivh /ublue-os-udev-rules.noarch.rpm
+RUN rpm -ivh /ublue-os-update-services.noarch.rpm
+
 # Copy the build script and all custom scripts.
 COPY scripts /tmp/scripts
 
+RUN rpm-ostree install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+RUN rpm-ostree override remove libavcodec-free libavfilter-free libavformat-free libavutil-free libpostproc-free libswresample-free libswscale-free mesa-va-drivers
+
 # Run the build script, then clean up temp files and finalize container build.
-RUN rpm-ostree install /tmp/ublue-os-wallpapers-0.1-1.fc38.noarch.rpm && \
-        chmod +x /tmp/scripts/build.sh && \
+RUN ls /etc/yum.repos.d/
+RUN chmod +x /tmp/scripts/build.sh && \
         /tmp/scripts/build.sh && \
         rm -rf /tmp/* /var/* && \
         ostree container commit
