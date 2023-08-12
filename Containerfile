@@ -46,6 +46,9 @@ COPY ${RECIPE} /usr/share/ublue-os/recipe.yml
 # Copied from the official container image since it's not available as an RPM.
 COPY --from=docker.io/mikefarah/yq /usr/bin/yq /usr/bin/yq
 
+
+COPY --from=ghcr.io/ublue-os/config:latest /usr /usr
+COPY --from=ghcr.io/ublue-os/config:latest /etc /etc
 COPY --from=ghcr.io/ublue-os/config:latest /rpms/ublue-os-udev-rules.noarch.rpm /
 COPY --from=ghcr.io/ublue-os/config:latest /rpms/ublue-os-update-services.noarch.rpm /
 RUN rpm -ivh /ublue-os-udev-rules.noarch.rpm
