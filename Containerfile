@@ -47,8 +47,8 @@ COPY ${RECIPE} /usr/share/ublue-os/recipe.yml
 COPY --from=docker.io/mikefarah/yq /usr/bin/yq /usr/bin/yq
 
 
-COPY --from=ghcr.io/ublue-os/config:latest /files/usr /usr
-COPY --from=ghcr.io/ublue-os/config:latest /files/etc /etc
+# COPY --from=ghcr.io/ublue-os/config:latest /files/usr /usr
+# COPY --from=ghcr.io/ublue-os/config:latest /files/etc /etc
 COPY --from=ghcr.io/ublue-os/config:latest /rpms/ublue-os-udev-rules.noarch.rpm /
 COPY --from=ghcr.io/ublue-os/config:latest /rpms/ublue-os-update-services.noarch.rpm /
 RUN rpm -ivh /ublue-os-udev-rules.noarch.rpm
