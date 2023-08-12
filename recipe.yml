@@ -127,7 +127,6 @@ rpm:
     - yelp
     - gnome-tour
     - gnome-system-monitor
-    - evolution-data-server
 
 # Configuration for the "first boot" experience, which is available after login.
 firstboot:
