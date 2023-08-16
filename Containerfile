@@ -5,7 +5,7 @@
 # in the cloud. The ARGs have default values, but changing those
 # does nothing if the image is built in the cloud.
 
-ARG FEDORA_MAJOR_VERSION=38
+ARG FEDORA_MAJOR_VERSION=latest
 # Warning: changing this might not do anything for you. Read comment above.
 ARG BASE_IMAGE_URL=quay.io/fedora-ostree-desktops/silverblue
 
