@@ -61,9 +61,6 @@ rpm:
     # apps and binaries require it, so it's a good idea to always include it
     # if you ever download or compile any custom software on your machine.
     - libadwaita
-    # Add your own below:
-    # Example:
-    # - tilix
     - adw-gtk3-theme
     - mesa-dri-drivers
     - mpv
@@ -114,12 +111,10 @@ rpm:
     - zstd
     - wireguard-tools
     - gnome-tweaks
-#    - raw-thumbnailer
+    - raw-thumbnailer
     - aria2
     - zsh
-    - virt-manager
     - zenity
-    - android-tools
 
     # These RPMs will be removed from the system image. This step happens during
     # image build, BEFORE installing custom RPMs (from the "rpm.install" category).
