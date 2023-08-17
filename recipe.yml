@@ -114,7 +114,7 @@ rpm:
     - zstd
     - wireguard-tools
     - gnome-tweaks
-    - raw-thumbnailer
+#    - raw-thumbnailer
     - aria2
     - zsh
     - virt-manager
