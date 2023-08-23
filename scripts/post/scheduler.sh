@@ -3,8 +3,5 @@
 # Tell this script to exit if there are any errors.
 set -oue pipefail
 
-cd /tmp
-git clone https://github.com/pop-os/system76-scheduler.git
-cd system76-scheduler
-just execsnoop=$(which execsnoop-bpfcc) build-release
-sudo just sysconfdir=/usr/share install
+sudo wget https://copr.fedorainfracloud.org/coprs/kylegospo/system76-scheduler/repo/fedora-$(rpm -E %fedora)/kylegospo-system76-scheduler-fedora-$(rpm -E %fedora).repo -O /etc/yum.repos.d/_copr_kylegospo-system76-scheduler.repo
+sudo rpm-ostree install system76-scheduler
