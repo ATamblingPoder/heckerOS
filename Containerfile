@@ -51,6 +51,7 @@ COPY --from=docker.io/mikefarah/yq /usr/bin/yq /usr/bin/yq
 # COPY --from=ghcr.io/ublue-os/config:latest /files/etc /etc
 COPY --from=ghcr.io/ublue-os/config:latest /rpms/ublue-os-udev-rules.noarch.rpm /
 COPY --from=ghcr.io/ublue-os/config:latest /rpms/ublue-os-update-services.noarch.rpm /
+RUN rpm-ostree install https://kojipkgs.fedoraproject.org//packages/rust-just/1.14.0/1.fc$(rpm -E %fedora)/x86_64/just-1.14.0-1.fc$(rpm -E %fedora).x86_64.rpm
 RUN rpm -ivh /ublue-os-udev-rules.noarch.rpm
 RUN rpm -ivh /ublue-os-update-services.noarch.rpm
 
