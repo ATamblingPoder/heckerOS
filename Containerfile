@@ -69,6 +69,7 @@ RUN rm -rf /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo
     /etc/yum.repos.d/fedora-updates-testing* /etc/yum.repos.d/google-chrome \
     /etc/yum.repos.d/rpmfusion-nonfree-nvidia-driver.repo /etc/yum.repos.d/rpmfusion-nonfree-updates-testing.repo\ 
     /etc/yum.repos.d/rpmfusion-free-updates-testing.repo
+RUN rm -rf /usr/share/glib-2.0/schemas/org.gnome.mutter.gschema.xml
 RUN rpm-ostree override replace --experimental --from repo=copr:copr.fedorainfracloud.org:kylegospo:gnome-vrr mutter gnome-control-center gnome-control-center-filesystem xorg-x11-server-Xwayland
 RUN ostree container commit
 RUN systemctl enable com.system76.Scheduler
