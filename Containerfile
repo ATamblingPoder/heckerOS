@@ -60,15 +60,15 @@ COPY scripts /tmp/scripts
 
 RUN rpm-ostree install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 RUN rpm-ostree override remove libavcodec-free libavfilter-free libavformat-free libavutil-free libpostproc-free libswresample-free libswscale-free mesa-va-drivers
-RUN rm /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo \
-    /etc/yum.repos.d/fedora-updates-testing* /etc/yum.repos.d/google-chrome \
-    /etc/yum.repos.d/rpmfusion-nonfree-nvidia-driver.repo /etc/yum.repos.d/rpmfusion-nonfree-updates-testing.repo\ 
-    /etc/yum.repos.d/rpmfusion-free-updates-testing.repo
 RUN rpm-ostree override replace --experimental --from repo=copr:copr.fedorainfracloud.org:kylegospo:gnome-vrr mutter gnome-control-center gnome-control-center-filesystem xorg-x11-server-Xwayland
 
 # Run the build script, then clean up temp files and finalize container build.
 RUN chmod +x /tmp/scripts/build.sh && \
         /tmp/scripts/build.sh && \
-        rm -rf /tmp/* /var/* && \
-        ostree container commit
+        rm -rf /tmp/* /var/*
+RUN rm -rf /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo \
+    /etc/yum.repos.d/fedora-updates-testing* /etc/yum.repos.d/google-chrome \
+    /etc/yum.repos.d/rpmfusion-nonfree-nvidia-driver.repo /etc/yum.repos.d/rpmfusion-nonfree-updates-testing.repo\ 
+    /etc/yum.repos.d/rpmfusion-free-updates-testing.repo
+RUN ostree container commit
 RUN systemctl enable com.system76.Scheduler
