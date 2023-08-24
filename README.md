@@ -2,14 +2,11 @@
 
 [![build-ublue](https://github.com/ATamblingPoder/heckerOS/actions/workflows/build.yml/badge.svg)](https://github.com/ATamblingPoder/heckerOS/actions/workflows/build.yml)
 
-This is a custom build of [Fedora Silverblue](https://fedoraproject.org/silverblue) with a bunch of custom gaming related and miscellaneous stuff with [linux-cachyos-bore-lto](https://github.com/cachyos/linux-cachyos) kernel.
+This is a custom build of [Fedora Silverblue](https://fedoraproject.org/silverblue) with a bunch of custom gaming related and miscellaneous stuff with [linux-cachyos-bore-eevdf](https://github.com/cachyos/linux-cachyos) kernel, [system76-scheduler](https://github.com/pop-os/system76-scheduler), and mutter replaced with [mutter-vrr](https://copr.fedorainfracloud.org/coprs/kylegospo/gnome-vrr/) for Variable Refresh Rate Support.
 
 Made using [uBlue](https://universal-blue.org/).
 
 ## Installation
-
-> **Warning**
-> This is an experimental feature and should not be used in production, try it in a VM for a while!
 
 To rebase an existing Silverblue/Kinoite installation to the latest build:
 
