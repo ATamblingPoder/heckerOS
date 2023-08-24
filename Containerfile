@@ -51,10 +51,6 @@ COPY --from=docker.io/mikefarah/yq /usr/bin/yq /usr/bin/yq
 # COPY --from=ghcr.io/ublue-os/config:latest /files/etc /etc
 COPY --from=ghcr.io/ublue-os/config:latest /rpms/ublue-os-udev-rules.noarch.rpm /
 COPY --from=ghcr.io/ublue-os/config:latest /rpms/ublue-os-update-services.noarch.rpm /
-RUN rm /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo \
-    /etc/yum.repos.d/fedora-updates-testing* /etc/yum.repos.d/google-chrome \
-    /etc/yum.repos.d/rpmfusion-nonfree-nvidia-driver.repo /etc/yum.repos.d/rpmfusion-nonfree-updates-testing.repo\ 
-    /etc/yum.repos.d/rpmfusion-free-updates-testing.repo
 RUN wget https://copr.fedorainfracloud.org/coprs/kylegospo/gnome-vrr/repo/fedora-$(rpm -E %fedora)/kylegospo-gnome-vrr-fedora-$(rpm -E %fedora).repo -O /etc/yum.repos.d/_copr_kylegospo-gnome-vrr.repo 
 RUN rpm -ivh /ublue-os-udev-rules.noarch.rpm
 RUN rpm -ivh /ublue-os-update-services.noarch.rpm
@@ -64,6 +60,10 @@ COPY scripts /tmp/scripts
 
 RUN rpm-ostree install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 RUN rpm-ostree override remove libavcodec-free libavfilter-free libavformat-free libavutil-free libpostproc-free libswresample-free libswscale-free mesa-va-drivers
+RUN rm /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo \
+    /etc/yum.repos.d/fedora-updates-testing* /etc/yum.repos.d/google-chrome \
+    /etc/yum.repos.d/rpmfusion-nonfree-nvidia-driver.repo /etc/yum.repos.d/rpmfusion-nonfree-updates-testing.repo\ 
+    /etc/yum.repos.d/rpmfusion-free-updates-testing.repo
 RUN rpm-ostree override replace --experimental --from repo=copr:copr.fedorainfracloud.org:kylegospo:gnome-vrr mutter gnome-control-center gnome-control-center-filesystem xorg-x11-server-Xwayland
 
 # Run the build script, then clean up temp files and finalize container build.
