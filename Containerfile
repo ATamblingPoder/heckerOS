@@ -67,3 +67,4 @@ RUN chmod +x /tmp/scripts/build.sh && \
         /tmp/scripts/build.sh && \
         rm -rf /tmp/* /var/* && \
         ostree container commit
+RUN ls /etc/yum.repos.d/
