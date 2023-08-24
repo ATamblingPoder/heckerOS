@@ -51,7 +51,7 @@ COPY --from=docker.io/mikefarah/yq /usr/bin/yq /usr/bin/yq
 # COPY --from=ghcr.io/ublue-os/config:latest /files/etc /etc
 COPY --from=ghcr.io/ublue-os/config:latest /rpms/ublue-os-udev-rules.noarch.rpm /
 COPY --from=ghcr.io/ublue-os/config:latest /rpms/ublue-os-update-services.noarch.rpm /
-RUN wget https://copr.fedorainfracloud.org/coprs/kylegospo/gnome-vrr/repo/fedora-$(rpm -E %fedora)/kylegospo-gnome-vrr-fedora-$(rpm -E %fedora).repo -O /etc/yum.repos.d/_copr_kylegospo-gnome-vrr.repo 
+# RUN wget https://copr.fedorainfracloud.org/coprs/kylegospo/gnome-vrr/repo/fedora-$(rpm -E %fedora)/kylegospo-gnome-vrr-fedora-$(rpm -E %fedora).repo -O /etc/yum.repos.d/_copr_kylegospo-gnome-vrr.repo 
 RUN rpm -ivh /ublue-os-udev-rules.noarch.rpm
 RUN rpm -ivh /ublue-os-update-services.noarch.rpm
 
@@ -71,8 +71,8 @@ RUN rm -rf /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo
     /etc/yum.repos.d/rpmfusion-nonfree-nvidia-driver.repo /etc/yum.repos.d/rpmfusion-nonfree-updates-testing.repo\ 
     /etc/yum.repos.d/rpmfusion-free-updates-testing.repo
 
-RUN sudo rm -rf /usr/share/glib-2.0/schemas/org.gnome.mutter.gschema.xml
-RUN echo "\n Removed /usr/share/glib-2.0/schemas/org.gnome.mutter.gschema.xml \n"
-RUN rpm-ostree override replace --experimental --from repo=copr:copr.fedorainfracloud.org:kylegospo:gnome-vrr mutter gnome-control-center gnome-control-center-filesystem xorg-x11-server-Xwayland --dry-run
-RUN ostree container commit
+# RUN sudo rm -rf /usr/share/glib-2.0/schemas/org.gnome.mutter.gschema.xml
+# RUN echo "\n Removed /usr/share/glib-2.0/schemas/org.gnome.mutter.gschema.xml \n"
+# RUN rpm-ostree override replace --experimental --from repo=copr:copr.fedorainfracloud.org:kylegospo:gnome-vrr mutter gnome-control-center gnome-control-center-filesystem xorg-x11-server-Xwayland --dry-run
 RUN systemctl enable com.system76.Scheduler
+RUN ostree container commit
