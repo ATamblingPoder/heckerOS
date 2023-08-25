@@ -71,8 +71,8 @@ RUN rm -rf /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo
     /etc/yum.repos.d/rpmfusion-nonfree-nvidia-driver.repo /etc/yum.repos.d/rpmfusion-nonfree-updates-testing.repo\ 
     /etc/yum.repos.d/rpmfusion-free-updates-testing.repo
 
-RUN sudo rm -rf /usr/share/glib-2.0/schemas/org.gnome.mutter.gschema.xml
-RUN echo "\n Removed /usr/share/glib-2.0/schemas/org.gnome.mutter.gschema.xml \n"
-RUN rpm-ostree override replace --experimental --from repo=copr:copr.fedorainfracloud.org:kylegospo:gnome-vrr mutter gnome-control-center gnome-control-center-filesystem xorg-x11-server-Xwayland --dry-run
-RUN ostree container commit
+# RUN sudo rm -rf /usr/share/glib-2.0/schemas/org.gnome.mutter.gschema.xml
+# RUN echo "\n Removed /usr/share/glib-2.0/schemas/org.gnome.mutter.gschema.xml \n"
+RUN rpm-ostree override replace --experimental --from repo=copr:copr.fedorainfracloud.org:kylegospo:gnome-vrr mutter mutter-common gnome-control-center gnome-control-center-filesystem xorg-x11-server-Xwayland
 RUN systemctl enable com.system76.Scheduler
+RUN ostree container commit
