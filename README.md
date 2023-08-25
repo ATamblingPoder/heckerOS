@@ -4,7 +4,7 @@
 
 This is a custom build of [Fedora Silverblue](https://fedoraproject.org/silverblue) with a bunch of custom gaming related and miscellaneous stuff with [linux-cachyos-bore-eevdf](https://github.com/cachyos/linux-cachyos) kernel, [system76-scheduler](https://github.com/pop-os/system76-scheduler), and mutter replaced with [mutter-vrr](https://copr.fedorainfracloud.org/coprs/kylegospo/gnome-vrr/) for Variable Refresh Rate Support.
 
-Made using [uBlue](https://universal-blue.org/).
+Made using [universal-blue](https://universal-blue.org/).
 
 ## Installation
 
