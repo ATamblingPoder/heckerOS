@@ -50,16 +50,18 @@ COPY --from=docker.io/mikefarah/yq /usr/bin/yq /usr/bin/yq
 # COPY --from=ghcr.io/ublue-os/config:latest /files/usr /usr
 # COPY --from=ghcr.io/ublue-os/config:latest /files/etc /etc
 COPY --from=ghcr.io/ublue-os/config:latest /rpms/ublue-os-udev-rules.noarch.rpm /
-COPY --from=ghcr.io/ublue-os/config:latest /rpms/ublue-os-update-services.noarch.rpm /
+# COPY --from=ghcr.io/ublue-os/config:latest /rpms/ublue-os-update-services.noarch.rpm /
 RUN wget https://copr.fedorainfracloud.org/coprs/kylegospo/gnome-vrr/repo/fedora-$(rpm -E %fedora)/kylegospo-gnome-vrr-fedora-$(rpm -E %fedora).repo -O /etc/yum.repos.d/_copr_kylegospo-gnome-vrr.repo 
 RUN rpm -ivh /ublue-os-udev-rules.noarch.rpm
-RUN rpm -ivh /ublue-os-update-services.noarch.rpm
+# RUN rpm -ivh /ublue-os-update-services.noarch.rpm
 
 # Copy the build script and all custom scripts.
 COPY scripts /tmp/scripts
 
 RUN rpm-ostree install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 RUN rpm-ostree override remove libavcodec-free libavfilter-free libavformat-free libavutil-free libpostproc-free libswresample-free libswscale-free mesa-va-drivers
+
+COPY misc/grub /etc/default/grub
 
 # Run the build script, then clean up temp files and finalize container build.
 RUN chmod +x /tmp/scripts/build.sh && \
