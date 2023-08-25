@@ -68,7 +68,7 @@ rpm:
     - libgcc
     - llvm-libs
     - mesa-vulkan-drivers
-    - lutris
+#    - lutris
     - gnome-text-editor
     - eog
     - evince
